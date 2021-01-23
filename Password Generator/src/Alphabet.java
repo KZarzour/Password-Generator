@@ -2,41 +2,40 @@
 
 
 public class Alphabet {
-	String UppercaseLetters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	String LowercaseLetters="abcdefghijklmnopqrstuvwxyz";
-	String Numbers="1234567890";
-	String Symbols="!@#$%^&*()-_=+\\/~?";
-	String Pool="";
-	int PoolSize;
+	
+	public static final String UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static final String LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz";
+	public static final String NUMBERS = "1234567890";
+	public static final String SYMBOLS = "!@#$%^&*()-_=+\\/~?";
+	
+	private StringBuilder pool;
 
-	public Alphabet(boolean Upper,boolean Lower, boolean Num, boolean Sym) {
+
+	public Alphabet(boolean uppercaseIncluded, boolean lowercaseIncluded, boolean numbersIncluded, boolean specialCharactersIncluded) {
 		
-		if (Upper==true) {
-			Pool=Pool+UppercaseLetters;
+		pool = new StringBuilder();
+		
+		if (uppercaseIncluded) {
+			pool.append(UPPERCASE_LETTERS);
 		}
 		
-		if (Lower==true) {
-			Pool=Pool+LowercaseLetters;
+		if (lowercaseIncluded) {
+			pool.append(LOWERCASE_LETTERS);
 		}
 		
-		if (Num==true) {
-			Pool=Pool+Numbers;
+		if (numbersIncluded) {
+			pool.append(NUMBERS);
 		}
 		
-		if (Sym==true) {
-			Pool=Pool+Symbols;
+		if (specialCharactersIncluded) {
+			pool.append(SYMBOLS);
 		}
-		
-		PoolSize=Pool.length();
 		
 	}
 	
-
-	
-	@Override
-	public String toString() {
-		return Pool;
+	public String getAlphabet()
+	{
+		return pool.toString();
 	}
-
 
 }

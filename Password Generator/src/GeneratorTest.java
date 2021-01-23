@@ -4,40 +4,41 @@ import org.junit.jupiter.api.Test;
 
 class GeneratorTest {
 	
-	Password P1= new Password("Secret");
-	Alphabet A1=new Alphabet(true,false,false,false);
-	Alphabet A2=new Alphabet(false,true,true,true);
-	Generator G1=new Generator(true,false,false,false);
-	Password P2= G1.GeneratePassword(4);
+	private final Password password= new Password("Secret");
+	private final Alphabet firstAlphabet = new Alphabet(true,false,false,false);
+	private final Alphabet secondAlphabet = new Alphabet(false,true,true,true);
+	private final Generator generator = new Generator(true,false,false,false);
+	private final Password generatedPassword = generator.GeneratePassword(4);
+	
 	@Test
 	void test1() {
-		assertEquals("Secret",P1.toString());
+		assertEquals("Secret", password.toString());
 	}
 
 	@Test
 	void test2() {
-		assertEquals(A1.Pool,A1.UppercaseLetters);
+		assertEquals(firstAlphabet.getAlphabet(), Alphabet.UPPERCASE_LETTERS);
 	}
 
 	@Test
 	void test3() {
-		assertEquals(A2.Pool,A2.LowercaseLetters+A2.Numbers+A2.Symbols);
+		assertEquals(secondAlphabet.getAlphabet(), Alphabet.LOWERCASE_LETTERS + Alphabet.NUMBERS + Alphabet.SYMBOLS);
 	}
 	
 	@Test
 	void test4() {
-		assertEquals(G1.Alphabet.Pool,A1.UppercaseLetters);
+		assertEquals(generator.alphabet.getAlphabet(), Alphabet.UPPERCASE_LETTERS);
 	}
 	
 	@Test
 	void test5() {
-		assertEquals(G1.Alphabet.PoolSize,26);
+		assertEquals(generator.alphabet.getAlphabet().length(), 26);
 	}
 	
 	
 	@Test
 	void test6() {
-		assertEquals(P2.Length,4);
-		System.out.println(P2);
+		assertEquals(generatedPassword.Length, 4);
+		System.out.println(generatedPassword);
 	}
 }

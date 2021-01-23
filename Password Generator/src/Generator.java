@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Generator {
@@ -6,35 +5,36 @@ public class Generator {
 	boolean IncludeLower=false;
 	boolean IncludeNum=false;
 	boolean IncludeSym=false;
-	Alphabet Alphabet;
+	Alphabet alphabet;
 	
 	public Generator(boolean IncludeUpper,boolean IncludeLower, boolean IncludeNum, boolean IncludeSym) {
-		Alphabet=new Alphabet(IncludeUpper,IncludeLower,IncludeNum,IncludeSym);
+		alphabet=new Alphabet(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
 	}
 	
-	public Password GeneratePassword(int Length) {
-		String Pass="";
-		char Char;
-		int n=Alphabet.PoolSize;
+	public Password GeneratePassword(int length) {
+		final StringBuilder pass = new StringBuilder("");
+
+		final int alphabetLength = alphabet.getAlphabet().length();
 		
-		int max = n-1; 
+		int max = alphabetLength - 1; 
         int min = 0; 
         int range = max - min + 1; 
         
 		
 		
-		for(int i=0;i<Length;i++) {
+		for(int i=0;i<length;i++) {
+			
 			int index=(int)(Math.random() * range) + min; 
-			Char=Alphabet.Pool.charAt(index);
-			Pass=Pass+Char;
+			
+			pass.append(alphabet.getAlphabet().charAt(index));
 		}
 		
-		return new Password(Pass);
+		return new Password(pass.toString());
 		
 	}
 	
 	
-	public static void UsefulInfo() {
+	public static void printUsefulInfo() {
 		System.out.println();
 		System.out.println("Use a minimum password length of 8 or more characters if permitted");
 		System.out.println("Include lowercase and uppercase alphabetic characters, numbers and symbols if permitted");
@@ -46,13 +46,14 @@ public class Generator {
 	}
 	
 	
-	public static void PasswordRequest() {
+	public static void requestPassword() {
 		boolean IncludeUpper=false;
 		boolean IncludeLower=false;
 		boolean IncludeNum=false;
 		boolean IncludeSym=false;
 		String Input;
-		Scanner in = new Scanner(System.in);
+		final Scanner in = new Scanner(System.in);
+		
 		System.out.println();
 		System.out.println("Hello, welcome to the Password Generator :) answer"
 				+" the following questions by Yes or No \n");
@@ -124,12 +125,14 @@ public class Generator {
 	        System.out.println("Great! Now enter the length of the password");
 	        int length=in.nextInt();
 	        
-	        Generator G=new Generator (IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
+	        final Generator generator = new Generator (IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
 	        
 	        
-	        Password UserPass=G.GeneratePassword(length);
+	        final Password UserPass = generator.GeneratePassword(length);
 	        
 	        System.out.println(UserPass);
+	        
+	        in.close();
 	        break;
 		}
 	}
@@ -140,18 +143,21 @@ public class Generator {
 	}
 	
 	
-	public static void PasswordCheck() {
-		String Input;
-		Scanner in = new Scanner(System.in);
-		System.out.println();
-		System.out.print("Enter your password:");
-		Input = in.nextLine();
+	public static void checkPassword() {
+		String input;
+		final Scanner in = new Scanner(System.in);
+
+		System.out.print("\nEnter your password:");
+		input = in.nextLine();
 		
-		Password P=new Password(Input);
-		System.out.println(P.CalculateScore());
+		final Password p = new Password(input);
+		
+		System.out.println(p.calculateScore());
+		
+		in.close();
 	}
 	
-	public static void Menu() {
+	public static void printMenu() {
 		System.out.println();
 		System.out.println("Enter 1 - Password Generator");
 		System.out.println("Enter 2 - Password Stength Check");
@@ -162,26 +168,26 @@ public class Generator {
 	
 	public static void main(String[] args) {
 		String Input;
-		Scanner in = new Scanner(System.in);
+		final Scanner in = new Scanner(System.in);
 		System.out.println("Welcome to Ziz Password Services :)" );
-		Menu();
+		printMenu();
 		while (in.hasNextLine()) {
 			
 			Input = in.nextLine();
 			
 			if (Input.equals("1")) {
-				PasswordRequest();
-				Menu();
+				requestPassword();
+				printMenu();
 			}
 			
 			else if (Input.equals("2")) {
-				PasswordCheck();
-				Menu();
+				checkPassword();
+				printMenu();
 			}
 			
 			else if (Input.equals("3")) {
-				UsefulInfo();
-				Menu();
+				printUsefulInfo();
+				printMenu();
 			}
 			
 			else if (Input.equals("4")) {
@@ -191,9 +197,10 @@ public class Generator {
 			else {
 				System.out.println();
 				System.out.println("Kindly select one of the available commands" );	
-				Menu();
+				printMenu();
 			}
 		}
+		in.close();
 	}
 
 
