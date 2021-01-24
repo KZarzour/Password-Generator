@@ -102,7 +102,7 @@ public class Password {
 	
 		
 		
-	public String CalculateScore() {
+	public String calculateScore() {
 		int Score=0;
 	
 		Score=this.PasswordStrength();
