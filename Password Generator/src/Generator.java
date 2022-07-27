@@ -1,6 +1,8 @@
 import java.util.Objects;
 import java.util.Scanner;
 
+import java.security.SecureRandom;
+
 public class Generator {
     Alphabet alphabet;
     public static Scanner keyboard;
@@ -24,24 +26,26 @@ public class Generator {
             userOption = keyboard.next();
 
             switch (userOption) {
-                case "1" -> {
+                case "1":
                     requestPassword();
                     printMenu();
-                }
-                case "2" -> {
+                    break;
+                case "2":
                     checkPassword();
                     printMenu();
-                }
-                case "3" -> {
+                    break;
+                case "3":
                     printUsefulInfo();
                     printMenu();
-                }
-                case "4" -> printQuitMessage();
-                default -> {
+                    break;
+                case "4":
+                    printQuitMessage();
+                    break;
+                default:
                     System.out.println();
                     System.out.println("Kindly select one of the available commands");
                     printMenu();
-                }
+                    break;
             }
         }
     }
@@ -55,8 +59,10 @@ public class Generator {
         int min = 0;
         int range = max - min + 1;
 
+        final SecureRandom rand = new SecureRandom();
+
         for (int i = 0; i < length; i++) {
-            int index = (int) (Math.random() * range) + min;
+            int index = (int) (rand.nextDouble() * range) + min;
             pass.append(alphabet.getAlphabet().charAt(index));
         }
 
@@ -92,6 +98,10 @@ public class Generator {
         do {
             System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
             String input = keyboard.nextLine();
+
+            if(input.isEmpty()) {
+              input = keyboard.nextLine();
+            }
 
             if (isInclude(input)) IncludeLower = true;
 
@@ -131,12 +141,12 @@ public class Generator {
     private boolean isInclude(String Input) {
         if (Input.equalsIgnoreCase("yes")) {
             return true;
-        } else {
-            if (!Input.equalsIgnoreCase("no")) {
-                PasswordRequestError();
-            }
+        }
+        if (!Input.equalsIgnoreCase("no")) {
+            PasswordRequestError();
             return false;
         }
+        return true;
     }
 
     private void PasswordRequestError() {
@@ -153,8 +163,6 @@ public class Generator {
         final Password p = new Password(input);
 
         System.out.println(p.calculateScore());
-
-        in.close();
     }
 
     private void printMenu() {
