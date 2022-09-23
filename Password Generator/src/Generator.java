@@ -89,6 +89,11 @@ public class Generator {
         System.out.println("Hello, welcome to the Password Generator :) answer"
                 + " the following questions by Yes or No \n");
 
+        //This line(Line number 96)is added because Scanner was skipping entering value to String variable input(Line 99) that has used .nextLine()
+        //Refer https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/ for more details
+        //For your reference, the input taken right before String input, was for the userOption variable in mainLoop() method
+        //After the user enters the value for userOption, the cursor stays at the position right after the value in the console(Line 24), due to which when String input was supposed to take a value, it was provided an empty string.
+        keyboard.nextLine();
         do {
             System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
             String input = keyboard.nextLine();
