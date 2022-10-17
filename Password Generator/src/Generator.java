@@ -1,4 +1,3 @@
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Generator {
@@ -78,10 +77,10 @@ public class Generator {
     }
 
     private void requestPassword() {
-        boolean IncludeUpper = false;
-        boolean IncludeLower = false;
-        boolean IncludeNum = false;
-        boolean IncludeSym = false;
+        boolean IncludeUpper;
+        boolean IncludeLower;
+        boolean IncludeNum;
+        boolean IncludeSym;
 
         boolean correctParams = false;
 
@@ -90,25 +89,11 @@ public class Generator {
                 + " the following questions by Yes or No \n");
 
         do {
-            System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
-            String input = keyboard.nextLine();
-
-            if (isInclude(input)) IncludeLower = true;
-
-            System.out.println("Do you want Uppercase letters \"ABCD...\" to be used? ");
-            input = keyboard.nextLine();
-
-            if (isInclude(input)) IncludeUpper = true;
-
-            System.out.println("Do you want Numbers \"1234...\" to be used? ");
-            input = keyboard.nextLine();
-
-            if (isInclude(input)) IncludeNum = true;
-
-            System.out.println("Do you want Symbols \"!@#$...\" to be used? ");
-            input = keyboard.nextLine();
-
-            if (isInclude(input)) IncludeSym = true;
+            keyboard.nextLine(); //Used to clear the input
+            IncludeLower = (getAnswer("Do you want Lowercase letters \"abcd...\" to be used? "));
+            IncludeUpper = (getAnswer("Do you want Uppercase letters \"ABCD...\" to be used? "));
+            IncludeNum = (getAnswer("Do you want Numbers \"1234...\" to be used? "));
+            IncludeSym = (getAnswer("Do you want Symbols \"!@#$...\" to be used? "));
 
             //No Pool Selected
             if (!IncludeUpper && !IncludeLower && !IncludeNum && !IncludeSym) {
@@ -128,14 +113,19 @@ public class Generator {
         } while (correctParams);
     }
 
-    private boolean isInclude(String Input) {
-        if (Input.equalsIgnoreCase("yes")) {
-            return true;
-        } else {
-            if (!Input.equalsIgnoreCase("no")) {
-                PasswordRequestError();
+    private boolean getAnswer(String Prompt) {
+        while (true) {
+            System.out.println(Prompt);
+            String input = keyboard.nextLine();
+            if (input.equalsIgnoreCase("yes")) {
+                return true;
+            } else {
+                if (!input.equalsIgnoreCase("no")) {
+                    PasswordRequestError();
+                    continue;
+                }
+                return false;
             }
-            return false;
         }
     }
 
