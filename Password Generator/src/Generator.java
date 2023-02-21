@@ -21,7 +21,7 @@ public class Generator {
 
         while (!userOption.equals("4")) {
 
-            userOption = keyboard.next();
+            userOption = keyboard.nextLine();
 
             switch (userOption) {
                 case "1" -> {
@@ -115,10 +115,12 @@ public class Generator {
                 System.out.println("You have selected no characters to generate your " +
                         "password at least one of your answers should be Yes");
                 correctParams = true;
+
+                continue;
             }
 
             System.out.println("Great! Now enter the length of the password");
-            int length = keyboard.nextInt();
+            int length = Integer.parseInt(keyboard.nextLine());
 
             final Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
             final Password password = generator.GeneratePassword(length);
@@ -140,21 +142,23 @@ public class Generator {
     }
 
     private void PasswordRequestError() {
-        System.out.println("You have entered something incorrect let's go over it again \n");
+//        System.out.println("You have entered something incorrect let's go over it again \n");
+        System.out.println("You have entered something incorrect. It'll be \'No\'.\n");
     }
 
     private void checkPassword() {
         String input;
-        final Scanner in = new Scanner(System.in);
+//        final Scanner in = new Scanner(System.in);
 
         System.out.print("\nEnter your password:");
-        input = in.nextLine();
+//        input = in.nextLine();
+        input = keyboard.nextLine();
 
         final Password p = new Password(input);
 
         System.out.println(p.calculateScore());
 
-        in.close();
+//        in.close();
     }
 
     private void printMenu() {
