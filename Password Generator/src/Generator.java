@@ -83,78 +83,90 @@ public class Generator {
         boolean IncludeNum = false;
         boolean IncludeSym = false;
 
-        boolean correctParams = false;
+        boolean correctParams;
 
         System.out.println();
         System.out.println("Hello, welcome to the Password Generator :) answer"
                 + " the following questions by Yes or No \n");
 
         do {
-            System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
-            String input = keyboard.nextLine();
+            String input;
+            correctParams = false;
+
+            do {
+                System.out.println("Do you want Lowercase letters \"abcd...\" to be used? ");
+                input = keyboard.next();
+                PasswordRequestError(input);
+            } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
 
             if (isInclude(input)) IncludeLower = true;
 
-            System.out.println("Do you want Uppercase letters \"ABCD...\" to be used? ");
-            input = keyboard.nextLine();
+            do {
+                System.out.println("Do you want Uppercase letters \"ABCD...\" to be used? ");
+                input = keyboard.next();
+                PasswordRequestError(input);
+            } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
 
             if (isInclude(input)) IncludeUpper = true;
 
+            do {
             System.out.println("Do you want Numbers \"1234...\" to be used? ");
-            input = keyboard.nextLine();
+            input = keyboard.next();
+            PasswordRequestError(input);
+            } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
 
             if (isInclude(input)) IncludeNum = true;
 
+            do {
             System.out.println("Do you want Symbols \"!@#$...\" to be used? ");
-            input = keyboard.nextLine();
+            input = keyboard.next();
+            PasswordRequestError(input);
+            } while (!input.equalsIgnoreCase("yes") && !input.equalsIgnoreCase("no"));
 
             if (isInclude(input)) IncludeSym = true;
 
             //No Pool Selected
             if (!IncludeUpper && !IncludeLower && !IncludeNum && !IncludeSym) {
                 System.out.println("You have selected no characters to generate your " +
-                        "password at least one of your answers should be Yes");
+                        "password, at least one of your answers should be Yes\n");
                 correctParams = true;
             }
 
-            System.out.println("Great! Now enter the length of the password");
-            int length = keyboard.nextInt();
-
-            final Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
-            final Password password = generator.GeneratePassword(length);
-
-            System.err.println("Your generated password -> " + password);
-
         } while (correctParams);
+
+        System.out.println("Great! Now enter the length of the password");
+        int length = keyboard.nextInt();
+
+        final Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
+        final Password password = generator.GeneratePassword(length);
+
+        System.err.println("Your generated password -> " + password);
     }
 
     private boolean isInclude(String Input) {
         if (Input.equalsIgnoreCase("yes")) {
             return true;
-        } else {
-            if (!Input.equalsIgnoreCase("no")) {
-                PasswordRequestError();
-            }
+        } 
+        else {
             return false;
         }
     }
 
-    private void PasswordRequestError() {
-        System.out.println("You have entered something incorrect let's go over it again \n");
+    private void PasswordRequestError(String i) {
+        if (!i.equalsIgnoreCase("yes") && !i.equalsIgnoreCase("no")) {
+            System.out.println("You have entered something incorrect let's go over it again \n");
+        }
     }
 
     private void checkPassword() {
         String input;
-        final Scanner in = new Scanner(System.in);
 
         System.out.print("\nEnter your password:");
-        input = in.nextLine();
+        input = keyboard.next();
 
         final Password p = new Password(input);
 
         System.out.println(p.calculateScore());
-
-        in.close();
     }
 
     private void printMenu() {
