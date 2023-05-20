@@ -141,6 +141,13 @@ public class Generator {
         final Password password = generator.GeneratePassword(length);
 
         System.err.println("Your generated password -> " + password);
+
+        //TODO: This is my code
+        int hash = 23;
+        for (int i = 0; i < length; i++){
+            hash = hash * 31 + password.toString().charAt(i);
+        }
+        System.err.println("Your new hash is ---> " + hash);
     }
 
     private boolean isInclude(String Input) {
