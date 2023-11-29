@@ -133,14 +133,30 @@ public class Generator {
             }
 
         } while (correctParams);
+        
+      int length;
 
-        System.out.println("Great! Now enter the length of the password");
-        int length = keyboard.nextInt();
+    do {
+        System.out.println("Great! Now enter the length of the password (must be a positive integer):");
+        //Directs user to enter a valid integer 
+        while (!keyboard.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid integer length:");
+            keyboard.next();
+        }
+        length = keyboard.nextInt();
+        
+        //Ensures the user enter an integer value that is greater than zero for a valid password to be generated
+        if (length <= 0) {
+            System.out.println("Password length should be greater than zero.");
+        }
+    } while (length <= 0);
 
-        final Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
-        final Password password = generator.GeneratePassword(length);
+    
+    final Generator generator = new Generator(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
+    final Password password = generator.GeneratePassword(length);
 
-        System.err.println("Your generated password -> " + password);
+    System.err.println("Your generated password -> " + password);
+
     }
 
     private boolean isInclude(String Input) {
