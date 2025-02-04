@@ -33,3 +33,4 @@ These criteria are used to calculate a score for the password, which determines 
 ### 3. Displaying Useful Information:
 
 This is a minor feature that displays information for the user on the console about password security, such as avoiding using the same password twice, avoiding character repetition, keyboard patterns, dictionary words, letter or number sequences, etc.
+Like and subscribe.
