@@ -8,29 +8,18 @@ public class Password {
         Length = s.length();
     }
 
-    public int CharType(char C) {
-        int val;
-
-        // Char is Uppercase Letter
-        if ((int) C >= 65 && (int) C <= 90)
-            val = 1;
-
-        // Char is Lowercase Letter
-        else if ((int) C >= 97 && (int) C <= 122) {
-            val = 2;
+    public int CharType(char words) {
+        if (Character.isUpperCase(words)) {
+            return 1; // uppercase
         }
-
-        // Char is Digit
-        else if ((int) C >= 60 && (int) C <= 71) {
-            val = 3;
+        if (Character.isLowerCase(words)) {
+            return 2; // lowercase
         }
-
-        // Char is Symbol
-        else {
-            val = 4;
+        if (Character.isDigit(words)) {
+            return 3; //digits
+        } else {
+            return 4; // symbols
         }
-
-        return val;
     }
 
     public int PasswordStrength() {
